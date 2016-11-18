@@ -28,6 +28,11 @@ Both can be overwritten by ENV keys
 - `DOCKERHUB_USER` defaults to `jippi`
 - `DOCKERHUB_REPO` defaults to `elastic-curator`
 
+
+## Source Code
+
+Please see https://github.com/jippi/docker-elastic-curator for source code
+
 ### Credits
 
 Based on the idea of `bobrik/curator`
