@@ -14,7 +14,17 @@ update-curator: curator/
 
 .PHONY: build-all
 build-all: curator/ update-curator ## build all curator git tags into docker
-	@set -x ; for tag in $$(cd curator/ ; git tag); do tag=$${tag#v}; docker build -t ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:$$tag . --build-arg VERSION=$$tag; done
+	@set -x ; for tag in $$(cd curator/ ; git tag); do tag=$${tag#v}; \
+		docker build -t ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:$$tag . --build-arg VERSION=$$tag; \
+	done
+
+.PHONY: tag-latest
+tag-latest: curator/ update-curator ## build and tag "latest"
+	@set -x ; latest=$$(cd curator ; git tag | sort | tail -1); \
+		tag=$${latest#v}; \
+		docker build -t ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:latest . --build-arg VERSION=$$tag ; \
+		docker push ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:latest ; \
+		docker push ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:$$tag
 
 .PHONY: build
 build: ## build a specific version of curator
