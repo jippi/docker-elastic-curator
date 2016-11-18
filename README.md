@@ -1,3 +1,8 @@
+[![Docker Stars](https://img.shields.io/docker/stars/jippi/elastic-curator.svg)](https://hub.docker.com/r/jippi/elastic-curator/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/jippi/elastic-curator.svg)](https://hub.docker.com/r/jippi/elastic-curator/)
+[![ImageLayers Size](https://img.shields.io/imagelayers/image-size/jippi/elastic-curator/latest.svg)](https://hub.docker.com/r/jippi/elastic-curator/)
+[![ImageLayers Layers](https://img.shields.io/imagelayers/layers/jippi/elastic-curator/latest.svg)](https://hub.docker.com/r/jippi/elastic-curator/)
+
 ## Curator in docker
 
 This is dockerized version of elasticsearch curator, tool to manage time-based indices.
