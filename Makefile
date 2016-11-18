@@ -22,9 +22,9 @@ build-all: curator/ update-curator ## build all curator git tags into docker
 tag-latest: curator/ update-curator ## build and tag "latest"
 	@set -x ; latest=$$(cd curator ; git tag | sort | tail -1); \
 		tag=$${latest#v}; \
-		docker build -t ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:latest . --build-arg VERSION=$$tag ; \
-		docker push ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:latest ; \
-		docker push ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:$$tag
+		docker build -t ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:latest . --build-arg VERSION=$$tag
+#		docker push ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:latest ; \
+#		docker push ${DOCKERHUB_USER}/${DOCKERHUB_REPO}:$$tag
 
 .PHONY: build
 build: ## build a specific version of curator
@@ -60,6 +60,11 @@ list-remote-docker-tags: ## list remote docker tags
 	@echo "Available remote docker tags"
 	@echo ""
 	@wget -q https://registry.hub.docker.com/v1/repositories/${DOCKERHUB_USER}/${DOCKERHUB_REPO}/tags -O -  | sed -e 's/[][]//g' -e 's/"//g' -e 's/ //g' | tr '}' '\n'  | awk -F: '{print $$3}'
+
+.PHONY: dist-clean-images
+dist-clean-images: ## remove all local docker image tags
+	docker rmi "${DOCKERHUB_USER}/${DOCKERHUB_REPO}"
+	docker rmi $$(docker images | grep "${DOCKERHUB_USER}/${DOCKERHUB_REPO}" | awk '{print $$3}')
 
 .PHONY: run
 run: ## run curator
